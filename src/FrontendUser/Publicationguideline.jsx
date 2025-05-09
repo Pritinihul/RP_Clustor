@@ -1,5 +1,5 @@
 import React from 'react'
-import Forauthorbanner from './Forauthorbanner';
+import Forauthorbanner from '../FrontendUser/banners/Forauthorbanner';
 
 
 const Publicationguideline = () => {

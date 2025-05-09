@@ -3,16 +3,16 @@ import React from 'react'
 const Forauthorbanner = () => {
     const styles = {
         container: {
-          backgroundColor: '#ffff',
+          backgroundColor: '#F1EFEC',
           padding: '60px 20px',
           textAlign: 'center',
           minHeight: '200px',
           position: 'relative',
-          fontFamily: 'Arial, sans-serif',
+          fontFamily: 'Livvic, sans-serif',
         },
         heading: {
           color: '#8576FF',
-          fontSize: '2.5rem',
+          fontSize: '2rem',
           marginBottom: '10px',
         },
         subheading: {
@@ -21,7 +21,7 @@ const Forauthorbanner = () => {
         },
         footerText: {
           position: 'absolute',
-          bottom: '10px',
+          
           width: '100%',
           fontSize: '0.85rem',
           color: '#000',

@@ -1,12 +1,13 @@
 import React from 'react'
-import Navbar from './Navbar';
 
+import About from './About';
+import OurJournel from './OurJournel';
 
 
 const HomePage = () => {
   return (
     <>
-     <Navbar/>
+ 
     <div className="page-wrapper">
       <div className="overlay">
         <div className="container">
@@ -26,7 +27,8 @@ const HomePage = () => {
         </div>
       </div>
     </div>
-  
+    <About/>
+    <OurJournel/>
     
     </>
   )

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Qualityreports = () => {
   return (
@@ -27,12 +28,12 @@ const Qualityreports = () => {
           <div className="tooltip">
             <ul className="tooltip-menu-with-icon">
               <li className="tooltip-link">
-                <a className="tooltip-links" href="/">
-                 <li>Ethics</li>
-                </a>
-                <a className="tooltip-links" href="/">
-                 <li>Copywrite Form</li>
-                </a>
+               <li>
+                  <Link to="/ethics">Ethics</Link>
+                </li>
+                 <li>
+                  <Link to="/copywriteform">Copyright Form</Link>
+                </li>
               </li>
        
             </ul>
