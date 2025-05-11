@@ -1,4 +1,7 @@
 import React from "react";
+import logo1 from "../assets/logo1.png"; // Adjust the path as necessary
+import { Link } from 'react-router-dom';
+
 
 
 const Footer = () => {
@@ -8,7 +11,7 @@ const Footer = () => {
         {/* Left Section */}
         <div className="footer-col footer-about">
           <img
-            src="/logo192.png"
+            src={logo1}
             alt="Research Hub Logo"
             className="footer-logo"
           />
@@ -39,24 +42,11 @@ const Footer = () => {
         <div className="footer-col footer-menu">
           <h3 className="footer-title">Menu</h3>
           <ul>
-            <li>
-              <a href="#home">Home</a>
-            </li>
-            <li>
-              <a href="#aboutus">About Us</a>
-            </li>
-            <li>
-              <a href="#ourjournals">Our Journals</a>
-            </li>
-            <li>
-              <a href="#forauthors">For Authors</a>
-            </li>
-            <li>
-              <a href="#qualityreports">Quality Reports</a>
-            </li>
-            <li>
-              <a href="#contactus">Contact Us</a>
-            </li>
+            <li><Link to="/">Home</Link></li>
+             <li><Link to="/">About Us</Link></li>
+            <li><Link to="/" >Our Journals</Link></li>
+          <li><Link to="/contact">Contact Us</Link></li>
+          <li><Link to="/register" >Login/Signup</Link></li>
           </ul>
         </div>
 

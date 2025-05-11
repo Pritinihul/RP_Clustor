@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-
 const Login = () => {
 
   const [formData, setFormData] = useState({
@@ -67,7 +66,6 @@ const Login = () => {
 };
   return (
   <>
-
      <div style={styles.container}>
       <form onSubmit={handleSubmit} style={styles.form}>
         <div style={styles.inputGroup}>

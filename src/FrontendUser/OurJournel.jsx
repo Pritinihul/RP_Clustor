@@ -21,7 +21,7 @@ const journals = [
 const OurJournel = () => {
   return (
     <>
-    <div className="container-ouurnals" id="our-journals">
+    <div className="container-ouurnals" >
     <section className="our-journals">
       <h2 className="heading">Our Journals</h2>
       <p className="subheading">Explore Journals across Disciplines</p>

@@ -28,6 +28,7 @@ const Publicationcharge = () => {
     fontWeight: "bold",
     marginTop: "30px",
     marginBottom: "10px",
+     textAlign: "center",
   },
   list: {
     paddingLeft: "20px",
@@ -71,6 +72,8 @@ const Publicationcharge = () => {
           </li>
         </ul>
       </div>
+
+    <hr />
 
       <h3 style={styles.subHeading}>Charges for International Authors</h3>
       <ul style={styles.list}>

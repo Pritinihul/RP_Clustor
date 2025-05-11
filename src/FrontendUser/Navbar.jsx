@@ -19,8 +19,8 @@ const Navbar = () => {
 
       <nav className={`navbar__links ${menuOpen ? 'active' : ''}`}>
         <ul>
-          <li><Link to="/" onClick={closeMenu}>Home</Link></li>
-          <li><Link to="" onClick={closeMenu}>About Us</Link></li>
+          <li><Link to="/"  onClick={closeMenu}>Home</Link></li>
+          <li><Link to="/"  onClick={closeMenu}>About Us</Link></li>
           <li><Link to="/" onClick={closeMenu}>Our Journals</Link></li>
           <li><Link to="/" onClick={closeMenu}>{<Forauthors/>}</Link></li>
           <li><Link to="/" onClick={closeMenu}>{<Qualityreports/>}</Link></li>

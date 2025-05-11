@@ -1,10 +1,10 @@
 import React from 'react'
-
 import About from './About';
 import OurJournel from './OurJournel';
-
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
+   const navigate = useNavigate();
   return (
     <>
  
@@ -20,8 +20,8 @@ const HomePage = () => {
             From Ancient Artifacts to Modern Masterpieces: Your Gateway to a World of Authentic History and <em>Art</em>
           </p>
           <div className="button-group">
-            <button className="btn">Submit Paper</button>
-            <button className="btn">Track Paper</button>
+            <button className="btn" onClick={() => navigate('/submitform')}>Submit Paper</button>
+            <button className="btn" onClick={() => navigate('/status')}>Track Paper</button>
             <button className="btn">Plagiarism</button>
           </div>
         </div>
