@@ -42,11 +42,11 @@ const Footer = () => {
         <div className="footer-col footer-menu">
           <h3 className="footer-title">Menu</h3>
           <ul>
-            <li><Link to="/">Home</Link></li>
-             <li><Link to="/">About Us</Link></li>
-            <li><Link to="/" >Our Journals</Link></li>
-          <li><Link to="/contact">Contact Us</Link></li>
-          <li><Link to="/register" >Login/Signup</Link></li>
+             <li><a href="/#home"  >Home</a></li>
+          <li><a href="/#about" >About Us</a></li>
+          <li><a href="/#journals">Our Journals</a></li>
+          <li><Link to="/contact" >Contact Us</Link></li>
+          <li><Link to="/register">Login/Signup</Link></li>
           </ul>
         </div>
 
