@@ -19,12 +19,12 @@ const Navbar = () => {
 
       <nav className={`navbar__links ${menuOpen ? 'active' : ''}`}>
         <ul>
-          <li><Link to="/"  onClick={closeMenu}>Home</Link></li>
-          <li><Link to="/"  onClick={closeMenu}>About Us</Link></li>
-          <li><Link to="/" onClick={closeMenu}>Our Journals</Link></li>
+          <li><a href="/#home"  onClick={closeMenu}>Home</a></li>
+          <li><a href="/#about" onClick={closeMenu}>About Us</a></li>
+          <li><a href="/#journals" onClick={closeMenu}>Our Journals</a></li>
           <li><Link to="/" onClick={closeMenu}>{<Forauthors/>}</Link></li>
           <li><Link to="/" onClick={closeMenu}>{<Qualityreports/>}</Link></li>
-          <li><Link to="/contact" onClick={closeMenu}>Contact Us</Link></li>
+          <li><Link to="/contact"  onClick={closeMenu}>Contact Us</Link></li>
           <li><Link to="/register" onClick={closeMenu}>Login/Signup</Link></li>
         </ul>
       </nav>

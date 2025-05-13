@@ -6,7 +6,9 @@ body {
   box-sizing: border-box;
   font-family: 'Livvic', sans-serif;
 }
-
+html {
+  scroll-behavior: smooth;
+}
 .navbar {
   width: 100%;
   background-color: #8576FF;
