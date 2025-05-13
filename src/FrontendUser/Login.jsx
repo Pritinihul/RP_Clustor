@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -15,61 +16,71 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("Login Data:", formData);
-    // Add your authentication logic here
+
+    // Dummy login check (replace with API call later)
+    if (formData.username === "admin" && formData.password === "12345") {
+      localStorage.setItem("auth", "true"); // Save auth flag
+      navigate("/dashboard"); // Redirect to dashboard
+    } else {
+      alert("Invalid credentials");
+    }
   };
 
   const styles = {
-  container: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    minHeight: "100vh",
-    padding: "20px",
-    backgroundColor: "#f0f0f0",
-   
-  },
-  form: {
-    backgroundColor: "#fff",
-    padding: "30px",
-    borderRadius: "10px",
-    boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
-    width: "100%",
-    maxWidth: "400px",
-    boxSizing: "border-box",
-  },
-  inputGroup: {
-    marginBottom: "15px",
-  },
-  label: {
-    display: "block",
-    marginBottom: "6px",
-    fontWeight: "bold",
-  },
-  input: {
-    width: "100%",
-    padding: "10px",
-    fontSize: "14px",
-    borderRadius: "5px",
-    border: "1px solid #ccc",
-    boxSizing: "border-box",
-  },
-  button: {
-    width: "100%",
-    padding: "12px",
-    backgroundColor: "#8576FF",
-    color: "#fff",
-    border: "none",
-    borderRadius: "5px",
-    fontSize: "16px",
-    cursor: "pointer",
-  },
-};
+    container: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      minHeight: "100vh",
+      padding: "20px",
+      backgroundColor: "#f0f0f0",
+    },
+    form: {
+      backgroundColor: "#fff",
+      padding: "30px",
+      borderRadius: "10px",
+      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+      width: "100%",
+      maxWidth: "400px",
+      boxSizing: "border-box",
+    },
+    inputGroup: {
+      marginBottom: "15px",
+    },
+    label: {
+      display: "block",
+      marginBottom: "6px",
+      fontWeight: "bold",
+    },
+    input: {
+      width: "100%",
+      padding: "10px",
+      fontSize: "14px",
+      borderRadius: "5px",
+      border: "1px solid #ccc",
+      boxSizing: "border-box",
+    },
+    button: {
+      width: "100%",
+      padding: "12px",
+      backgroundColor: "#8576FF",
+      color: "#fff",
+      border: "none",
+      borderRadius: "5px",
+      fontSize: "16px",
+      cursor: "pointer",
+    },
+  };
+
   return (
-  <>
-     <div style={styles.container}>
+<>
+    <div style={styles.container}>
+      <h2>Default Id & Password</h2> <br />
+<h2>Id :- admin</h2>
+<h2>Password :- 12345</h2>
       <form onSubmit={handleSubmit} style={styles.form}>
         <div style={styles.inputGroup}>
-          <label style={styles.label}>UserName:</label>
+          <label style={styles.label}>Username:</label>
           <input
             type="text"
             name="username"
@@ -91,11 +102,11 @@ const Login = () => {
           />
         </div>
         <button type="submit" style={styles.button}>Login</button>
-         <p>Don't have account<Link to="/register">Register</Link></p>
+        <p>Don't have an account? <Link to="/register">Register</Link></p>
       </form>
     </div>
-  </>
-  )
-}
+    </>
+  );
+};
 
-export default Login
+export default Login;

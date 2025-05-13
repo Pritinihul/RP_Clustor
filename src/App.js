@@ -1,5 +1,4 @@
 import React from 'react';
-
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import HomePage from './FrontendUser/HomePage';
@@ -13,6 +12,7 @@ import Ethics from './FrontendUser/Ethics';
 import SignUp from './FrontendUser/SignUp';
 import ContactUs from './FrontendUser/ContactUs';
 import Login from './FrontendUser/Login';
+import Dashboard from './FrontendUser/Dashboard';
 
 function App() {
   return (
@@ -28,6 +28,7 @@ function App() {
   <Route path='/register' element={<Layout><SignUp/></Layout>}></Route>
   <Route path='/login' element={<Layout><Login/></Layout>}></Route>
   <Route path='/contact' element={<Layout><ContactUs/></Layout>}></Route>
+   <Route path="/dashboard" element={<Dashboard/>} />
 </Routes>
 
 
