@@ -29,6 +29,7 @@ const ContactUs = () => {
     padding: "20px",
     backgroundColor: "#f5f5f5",
     minHeight: "100vh",
+    fontWeight: "bold",
   },
   form: {
     backgroundColor: "#fff",

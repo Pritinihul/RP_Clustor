@@ -1,8 +1,16 @@
 import React, { useState } from "react";
+
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
+
+import { useNavigate, Link } from "react-router-dom";
+
+const Login = () => {
+  const navigate = useNavigate();
+
+
   const [formData, setFormData] = useState({
     Email: "",
     Password: "",
@@ -13,6 +21,7 @@ const Login = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
 
  // Update the handleSubmit function to properly store tokens and redirect
 const handleSubmit = async (e) => {
@@ -54,6 +63,21 @@ const handleSubmit = async (e) => {
   }
 };
 
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Login Data:", formData);
+
+    // Dummy login check (replace with API call later)
+    if (formData.username === "admin" && formData.password === "12345") {
+      localStorage.setItem("auth", "true"); // Save auth flag
+      navigate("/dashboard"); // Redirect to dashboard
+    } else {
+      alert("Invalid credentials");
+    }
+  };
+
+
   const styles = {
     container: {
       display: "flex",
@@ -71,7 +95,9 @@ const handleSubmit = async (e) => {
       width: "100%",
       maxWidth: "400px",
       boxSizing: "border-box",
+
       marginTop: "60px"
+
     },
     inputGroup: {
       marginBottom: "15px",
@@ -97,6 +123,7 @@ const handleSubmit = async (e) => {
       border: "none",
       borderRadius: "5px",
       fontSize: "16px",
+
       marginTop: "10px",
       opacity: isLoading ? 0.7 : 1,
       cursor: isLoading ? 'not-allowed' : 'pointer'
@@ -105,10 +132,14 @@ const handleSubmit = async (e) => {
       marginTop: "15px",
       fontSize: "14px",
       textAlign: "center",
+
+      cursor: "pointer",
+
     },
   };
 
   return (
+
     <>
       <div style={styles.container}>
         <form onSubmit={handleSubmit} style={styles.form}>
@@ -151,6 +182,40 @@ const handleSubmit = async (e) => {
           </p>
         </form>
       </div>
+
+<>
+    <div style={styles.container}>
+      <h2>Default Id & Password</h2> <br />
+<h2>Id :- admin</h2>
+<h2>Password :- 12345</h2>
+      <form onSubmit={handleSubmit} style={styles.form}>
+        <div style={styles.inputGroup}>
+          <label style={styles.label}>Username:</label>
+          <input
+            type="text"
+            name="username"
+            style={styles.input}
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div style={styles.inputGroup}>
+          <label style={styles.label}>Password:</label>
+          <input
+            type="password"
+            name="password"
+            style={styles.input}
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <button type="submit" style={styles.button}>Login</button>
+        <p>Don't have an account? <Link to="/register">Register</Link></p>
+      </form>
+    </div>
+
     </>
   );
 };
