@@ -1,15 +1,41 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';  // make sure useNavigate is imported
+import axios from 'axios';
 import logo2 from '../assets/logo2.png';
-import Forauthors from './Forauthors';
-import Qualityreports from './Qualityreports';
-
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [author, setAuthor] = useState(null);
+  const navigate = useNavigate();  // 🔴 Required for navigation
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const closeMenu = () => setMenuOpen(false);
+
+  // 🔁 Fetch author data if logged in
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      axios.get('http://localhost:8000/api/current-author/', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => setAuthor(res.data))
+      .catch(err => {
+        console.error("Token invalid or expired:", err);
+        setAuthor(null);
+      });
+    }
+  }, []);
+
+  // 🔐 Logout function — ⬇️ Add this here
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('authorData');
+    setAuthor(null);
+    navigate('/');
+  };
 
   return (
     <header className="navbar">
@@ -22,10 +48,18 @@ const Navbar = () => {
           <li><a href="/#home"  onClick={closeMenu}>Home</a></li>
           <li><a href="/#about" onClick={closeMenu}>About Us</a></li>
           <li><a href="/#journals" onClick={closeMenu}>Our Journals</a></li>
-          <li><Link to="/" onClick={closeMenu}>{<Forauthors/>}</Link></li>
-          <li><Link to="/" onClick={closeMenu}>{<Qualityreports/>}</Link></li>
+          <li><Link to="/" onClick={closeMenu}>For Authors</Link></li>
+          <li><Link to="/" onClick={closeMenu}>Quality Reports</Link></li>
           <li><Link to="/contact"  onClick={closeMenu}>Contact Us</Link></li>
-          <li><Link to="/register" onClick={closeMenu}>Login/Signup</Link></li>
+
+          {author ? (
+            <>
+              <li><span>👤 {author.Name}</span></li>
+              <li><button onClick={handleLogout}>Logout</button></li>
+            </>
+          ) : (
+            <li><Link to="/register" onClick={closeMenu}>Login/Signup</Link></li>
+          )}
         </ul>
       </nav>
 
