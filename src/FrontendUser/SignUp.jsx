@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: "",
-    password: "",
-    email: "",
-    mobile: "",
-    designation: "",
-    organization: "",
-    country: "",
+    Name: "",
+    Password: "",
+    Email: "",
+    Mobile: "",
+    Designation: "",
+    Organization: "",
+    Country: ""
   });
-
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
 
   useEffect(() => {
@@ -26,10 +29,41 @@ const SignUp = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Registered Data:", formData);
-    // Add actual registration logic here
+    setIsLoading(true);
+    setError("");
+
+    try {
+      console.log('Sending data:', JSON.stringify(formData, null, 2)); // Add this line here
+
+      const response = await fetch('http://localhost:8000/api/signup/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          
+        
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Registration successful:', data);
+        navigate('/login'); // Redirect to login page
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || 'Registration failed');
+      }
+    } catch (error) {
+      setError('Network error. Please try again.');
+      console.error('Error:', error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const styles = {
@@ -87,94 +121,108 @@ const SignUp = () => {
   };
 
   return (
-   <>
-   
-    <div style={styles.container}>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            style={styles.input}
-            required
-          />
-        </div>
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            style={styles.input}
-            required
-          />
-        </div>
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Email Id:</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            style={styles.input}
-            required
-          />
-        </div>
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Mobile No:</label>
-          <input
-            type="tel"
-            name="mobile"
-            value={formData.mobile}
-            onChange={handleChange}
-            style={styles.input}
-            required
-          />
-        </div>
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Designation:</label>
-          <input
-            type="text"
-            name="designation"
-            value={formData.designation}
-            onChange={handleChange}
-            style={styles.input}
-            required
-          />
-        </div>
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Organization:</label>
-          <input
-            type="text"
-            name="organization"
-            value={formData.organization}
-            onChange={handleChange}
-            style={styles.input}
-            required
-          />
-        </div>
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Country:</label>
-          <input
-            type="text"
-            name="country"
-            value={formData.country}
-            onChange={handleChange}
-            style={styles.input}
-            required
-          />
-        </div>
-        <button type="submit" style={styles.button}>Register</button>
-        <p style={styles.loginText}>
-          Already have an account? <Link to="/login">Login</Link>
-        </p>
-      </form>
-    </div>
-   </>
+    <>
+      <div style={styles.container}>
+        <form onSubmit={handleSubmit} style={styles.form}>
+          {error && (
+            <div style={{ color: 'red', marginBottom: '15px', textAlign: 'center' }}>
+              {error}
+            </div>
+          )}
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Name:</label>
+            <input
+              type="text"
+              name="Name"
+              value={formData.Name}
+              onChange={handleChange}
+              style={styles.input}
+              required
+            />
+          </div>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Password:</label>
+            <input
+              type="password"
+              name="Password"
+              value={formData.Password}
+              onChange={handleChange}
+              style={styles.input}
+              required
+            />
+          </div>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Email Id:</label>
+            <input
+              type="email"
+              name="Email"
+              value={formData.Email}
+              onChange={handleChange}
+              style={styles.input}
+              required
+            />
+          </div>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Mobile No:</label>
+            <input
+              type="tel"
+              name="Mobile"
+              value={formData.Mobile}
+              onChange={handleChange}
+              style={styles.input}
+              required
+            />
+          </div>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Designation:</label>
+            <input
+              type="text"
+              name="Designation"
+              value={formData.Designation}
+              onChange={handleChange}
+              style={styles.input}
+              required
+            />
+          </div>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Organization:</label>
+            <input
+              type="text"
+              name="Organization"
+              value={formData.Organization}
+              onChange={handleChange}
+              style={styles.input}
+              required
+            />
+          </div>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Country:</label>
+            <input
+              type="text"
+              name="Country"
+              value={formData.Country}
+              onChange={handleChange}
+              style={styles.input}
+              required
+            />
+          </div>
+          <button 
+            type="submit" 
+            style={{
+              ...styles.button,
+              opacity: isLoading ? 0.7 : 1,
+              cursor: isLoading ? 'not-allowed' : 'pointer'
+            }} 
+            disabled={isLoading}
+          >
+            {isLoading ? 'Registering...' : 'Register'}
+          </button>
+          <p style={styles.loginText}>
+            Already have an account? <Link to="/login">Login</Link>
+          </p>
+        </form>
+      </div>
+    </>
   );
 };
 
