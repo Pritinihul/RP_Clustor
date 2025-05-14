@@ -1,11 +1,46 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Navbar from './Navbar'; // Assuming you have a Navbar component
+import Navbar from './Navbar';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [userData, setUserData] = useState(null);
 
- const styles = {
+  useEffect(() => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (!accessToken) {
+        navigate('/login');
+        return;
+    }
+
+    fetch('http://localhost:8000/api/dashboard/', {
+        headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => {
+        if (response.status === 401) {
+            localStorage.clear();
+            navigate('/login');
+            return;
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data) {
+            setUserData({
+                ...data.author,
+                papers: data.papers,
+                papers_count: data.papers_count
+            });
+        }
+    })
+    .catch(error => console.error('Error fetching dashboard data:', error));
+}, [navigate]);
+
+  const styles = {
     container: {
       display: "flex",
       flexDirection: "row",
@@ -91,77 +126,82 @@ const Dashboard = () => {
     },
   };
 
-  useEffect(() => {
-    const isAuthenticated = localStorage.getItem('auth');
-    if (!isAuthenticated) {
-      navigate('/login'); // 🚫 Redirect if not logged in
-    }
-  }, [navigate]);
-
   return (
     <>
-    <Navbar />
-     <div style={styles.container}>
-      {/* LEFT PANEL */}
-      <div style={{ ...styles.panel, ...styles.leftPanel }}>
-        <h3 style={styles.heading}>User Info</h3>
-        <p style={styles.detail}><strong>Status:</strong> Active</p>
-        <p style={styles.detail}><strong>User ID:</strong> #USR00123</p>
-        <h4 style={{ ...styles.heading, fontSize: "20px" }}>Submitted Papers</h4>
-        <table style={styles.table}>
-          <thead>
+      <Navbar />
+      <div style={styles.container}>
+        {/* LEFT PANEL */}
+        <div style={{ ...styles.panel, ...styles.leftPanel }}>
+          <h3 style={styles.heading}>User Info</h3>
+          <div style={styles.stats}>
+            <h4 style={{ ...styles.heading, fontSize: "20px" }}>Statistics</h4>
+            <p style={styles.detail}><strong>Total Papers:</strong> {userData?.papers_count?.total || 0}</p>
+            <p style={styles.detail}><strong>Pending:</strong> {userData?.papers_count?.pending || 0}</p>
+            <p style={styles.detail}><strong>Accepted:</strong> {userData?.papers_count?.accepted || 0}</p>
+            <p style={styles.detail}><strong>Rejected:</strong> {userData?.papers_count?.rejected || 0}</p>
+          </div>
+          
+          <h4 style={{ ...styles.heading, fontSize: "20px" }}>Submitted Papers</h4>
+          <table style={styles.table}>
+    <thead>
+        <tr>
+            <th style={styles.th}>Title</th>
+            <th style={styles.th}>Status</th>
+            <th style={styles.th}>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {userData?.papers?.length > 0 ? (
+            userData.papers.map((paper, index) => (
+                <tr key={paper.Paper_Id}>
+                    <td style={styles.td}>{paper.Paper_Title}</td>
+                    <td style={styles.td}>{paper.Paper_Status}</td>
+                    <td style={styles.td}>{new Date(paper.Submission_Date).toLocaleDateString()}</td>
+                </tr>
+            ))
+        ) : (
             <tr>
-              <th style={styles.th}>Title</th>
-              <th style={styles.th}>Date</th>
+                <td style={styles.td} colSpan="3">No papers submitted yet</td>
             </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style={styles.td}>Philosophy of Mind</td>
-              <td style={styles.td}>2025-04-10</td>
-            </tr>
-            <tr>
-              <td style={styles.td}>Modern Literature</td>
-              <td style={styles.td}>2025-03-22</td>
-            </tr>
-            <tr>
-              <td style={styles.td}>Linguistics Theory</td>
-              <td style={styles.td}>2025-02-15</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        )}
+    </tbody>
+</table>
+        </div>
 
-      {/* CENTER PANEL */}
-      <div style={{ ...styles.panel, ...styles.centerPanel }}>
-        <h2 style={styles.heading}>Welcome to Your Dashboard</h2>
-        <p style={styles.detail}>
-          Manage your journal submissions, notifications, and account settings here.
-        </p>
-        <h4 style={{ ...styles.heading, fontSize: "20px", textAlign: "left" }}>Recent Activity</h4>
-        <div style={styles.activityList}>
-          <div style={styles.activityItem}>✅ Submitted “Philosophy of Mind” on 10th April</div>
-          <div style={styles.activityItem}>📝 Updated profile info on 1st April</div>
-          <div style={styles.activityItem}>📄 Viewed feedback on “Modern Literature”</div>
+        {/* CENTER PANEL */}
+        <div style={{ ...styles.panel, ...styles.centerPanel }}>
+          <h2 style={styles.heading}>Welcome {userData?.Name || 'User'}!</h2>
+          <p style={styles.detail}>
+            Manage your journal submissions, notifications, and account settings here.
+          </p>
+          <h4 style={{ ...styles.heading, fontSize: "20px", textAlign: "left" }}>Recent Activity</h4>
+          <div style={styles.activityList}>
+            {userData?.activities?.length > 0 ? (
+              userData.activities.map((activity, index) => (
+                <div key={index} style={styles.activityItem}>{activity}</div>
+              ))
+            ) : (
+              <div style={styles.activityItem}>No recent activity</div>
+            )}
+          </div>
+        </div>
+
+        {/* RIGHT PANEL */}
+        <div style={{ ...styles.panel, ...styles.rightPanel }}>
+          <h3 style={styles.heading}>Profile</h3>
+          <img
+            src={userData?.profileImage || "https://via.placeholder.com/100"}
+            alt="Profile"
+            style={styles.profileImg}
+          />
+          <p style={styles.detail}><strong>Name:</strong> {userData?.Name || 'Loading...'}</p>
+          <p style={styles.detail}><strong>Email:</strong> {userData?.Email || 'Loading...'}</p>
+          <p style={styles.detail}><strong>Role:</strong> {userData?.Designation || 'Researcher'}</p>
+          <button style={styles.editButton}>Edit Profile</button>
         </div>
       </div>
-
-      {/* RIGHT PANEL */}
-      <div style={{ ...styles.panel, ...styles.rightPanel }}>
-        <h3 style={styles.heading}>Profile</h3>
-        <img
-          src="https://via.placeholder.com/100"
-          alt="Profile"
-          style={styles.profileImg}
-        />
-        <p style={styles.detail}><strong>Name:</strong> Jane Doe</p>
-        <p style={styles.detail}><strong>Email:</strong> jane@example.com</p>
-        <p style={styles.detail}><strong>Role:</strong> Researcher</p>
-        <button style={styles.editButton}>Edit Profile</button>
-      </div>
-    </div>
     </>
-  )
+  );
 };
 
 export default Dashboard;
