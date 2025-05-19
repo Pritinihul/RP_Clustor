@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';  // make sure useNavigate is imported
 import axios from 'axios';
 import logo2 from '../assets/logo2.png';
+import Forauthors from './Forauthors';
+import Qualityreports from './Qualityreports'
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -48,8 +50,8 @@ const Navbar = () => {
           <li><a href="/#home"  onClick={closeMenu}>Home</a></li>
           <li><a href="/#about" onClick={closeMenu}>About Us</a></li>
           <li><a href="/#journals" onClick={closeMenu}>Our Journals</a></li>
-          <li><Link to="/" onClick={closeMenu}>For Authors</Link></li>
-          <li><Link to="/" onClick={closeMenu}>Quality Reports</Link></li>
+          <li><Link to="/" onClick={closeMenu}><Forauthors/></Link></li>
+          <li><Link to="/" onClick={closeMenu}><Qualityreports/></Link></li>
           <li><Link to="/contact"  onClick={closeMenu}>Contact Us</Link></li>
 
           {author ? (
