@@ -53,13 +53,22 @@ const Navbar = () => {
           <li><Link to="/contact"  onClick={closeMenu}>Contact Us</Link></li>
 
           {author ? (
-            <>
-              <li><span>👤 {author.Name}</span></li>
-              <li><button onClick={handleLogout}>Logout</button></li>
-            </>
-          ) : (
-            <li><Link to="/register" onClick={closeMenu}>Login/Signup</Link></li>
-          )}
+  <>
+    <li>
+      <span 
+        onClick={() => navigate('/dashboard')} 
+        style={{ cursor: 'pointer' }}
+        title="Go to Dashboard"
+      >
+        👤 {author.Name}
+      </span>
+    </li>
+    <li><button onClick={handleLogout}>Logout</button></li>
+  </>
+) : (
+  <li><Link to="/register" onClick={closeMenu}>Login/Signup</Link></li>
+)}
+
         </ul>
       </nav>
 
