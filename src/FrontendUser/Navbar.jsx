@@ -42,7 +42,7 @@ const Navbar = () => {
   return (
     <header className="navbar">
       <div className="navbar__logo">
-        <img src={logo2} alt="logo" />
+       <Link to="/"><img src={logo2} alt="Logo" /></Link>
       </div>
 
       <nav className={`navbar__links ${menuOpen ? 'active' : ''}`}>

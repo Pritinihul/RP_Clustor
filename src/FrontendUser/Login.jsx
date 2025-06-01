@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import Loginbanner from "./banners/Loginbanner";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -59,9 +60,9 @@ const handleSubmit = async (e) => {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      minHeight: "100vh",
+      minHeight: "50vh",
       padding: "20px",
-      backgroundColor: "#f0f0f0",
+      backgroundColor: "#f5f5f5",
     },
     form: {
       backgroundColor: "#fff",
@@ -71,7 +72,6 @@ const handleSubmit = async (e) => {
       width: "100%",
       maxWidth: "400px",
       boxSizing: "border-box",
-      marginTop: "60px"
     },
     inputGroup: {
       marginBottom: "15px",
@@ -110,6 +110,7 @@ const handleSubmit = async (e) => {
 
   return (
     <>
+    <Loginbanner />
       <div style={styles.container}>
         <form onSubmit={handleSubmit} style={styles.form}>
           {error && (
