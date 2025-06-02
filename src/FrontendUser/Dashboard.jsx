@@ -173,7 +173,7 @@ const Dashboard = () => {
             style={styles.profileImg}
           />
           <p style={styles.detail}><strong>Name:</strong> {userData?.Name || 'Loading...'}</p>
-          <p style={styles.detail}><strong>Email:</strong> {userData?.Email || 'Loading...'}</p>
+          <p style={styles.detail}><strong>Email:</strong> {userData?.EmailId || 'Loading...'}</p>
           <p style={styles.detail}><strong>Role:</strong> {userData?.Designation || 'Researcher'}</p>
           <button style={styles.editButton}>Edit Profile</button>
         </div>
