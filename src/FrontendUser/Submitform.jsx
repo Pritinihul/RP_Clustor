@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import Forauthorbanner from '../FrontendUser/banners/Forauthorbanner';
 
 const Submitform = () => {
@@ -27,14 +28,23 @@ const Submitform = () => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
-    setPaperId(null); 
+    setPaperId(null);
 
     const accessToken = localStorage.getItem('accessToken');
+
+    // 🔒 Check if user is logged in
     if (!accessToken) {
-      navigate('/login');
+      Swal.fire({
+        title: 'Login Required',
+        text: 'Please login or register first to submit your paper.',
+        icon: 'warning',
+        confirmButtonText: 'Go to Login'
+      }).then(() => {
+        navigate('/login');
+      });
+      setIsLoading(false);
       return;
     }
-    let data = null;
 
     try {
       const formDataToSend = new FormData();
@@ -52,20 +62,33 @@ const Submitform = () => {
         body: formDataToSend
       });
 
-      data = await response.json(); // <-- Now sets outer-scoped variable
+      const data = await response.json();
 
       if (response.status === 401) {
-        localStorage.clear();
-        navigate('/login');
+        Swal.fire({
+          title: 'Session Expired',
+          text: 'Please login again to continue.',
+          icon: 'error',
+          confirmButtonText: 'Login Again'
+        }).then(() => {
+          localStorage.clear();
+          navigate('/login');
+        });
         return;
       }
 
       if (response.ok) {
-        setPaperId(data.Paper_Id); // Use it here safely
+        setPaperId(data.Paper_Id);
+        Swal.fire({
+          title: 'Success!',
+          text: `Paper submitted successfully. Your Paper ID is ${data.Paper_Id}`,
+          icon: 'success',
+          confirmButtonText: 'OK'
+        });
       } else {
         setError(data.error || 'Failed to submit paper');
       }
-  
+
     } catch (error) {
       setError('Network error. Please try again.');
       console.error('Error submitting paper:', error);
@@ -73,10 +96,7 @@ const Submitform = () => {
       setIsLoading(false);
     }
   };
-  
-      // const data = await response.json();
 
-      
   const styles = {
     container: {
       maxWidth: '500px',

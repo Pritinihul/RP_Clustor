@@ -10,10 +10,51 @@ const ContactUs = () => {
     message: "",
   });
 
+  const [errors, setErrors] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+  });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    // Name Validation
+    if (name === "name") {
+      const regex = /^[A-Za-z\s]*$/;
+      if (!regex.test(value)) {
+        setErrors((prev) => ({ ...prev, name: "Name must contain only letters" }));
+      } else {
+        setErrors((prev) => ({ ...prev, name: "" }));
+      }
+    }
+
+    // Email Validation
+    if (name === "email") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(value)) {
+        setErrors((prev) => ({ ...prev, email: "Enter a valid email address" }));
+      } else {
+        setErrors((prev) => ({ ...prev, email: "" }));
+      }
+    }
+
+    // Mobile Validation
+    if (name === "mobile") {
+      const digitOnly = value.replace(/\D/g, "");
+      if (digitOnly.length > 10) return; // Prevent more than 10 digits
+      if (digitOnly.length < 10) {
+        setErrors((prev) => ({ ...prev, mobile: "Mobile number must be 10 digits" }));
+      } else {
+        setErrors((prev) => ({ ...prev, mobile: "" }));
+      }
+      setFormData((prev) => ({ ...prev, mobile: digitOnly }));
+      return;
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
@@ -47,6 +88,11 @@ const ContactUs = () => {
           email: "",
           subject: "",
           message: "",
+        });
+        setErrors({
+          name: "",
+          email: "",
+          mobile: "",
         });
       } else {
         alert("Submission failed. Please check the form or try again.");
@@ -94,6 +140,11 @@ const ContactUs = () => {
       fontSize: "14px",
       boxSizing: "border-box",
     },
+    errorText: {
+      color: "red",
+      fontSize: "12px",
+      marginTop: "4px",
+    },
     button: {
       backgroundColor: "#8576FF",
       color: "#fff",
@@ -121,6 +172,7 @@ const ContactUs = () => {
               onChange={handleChange}
               required
             />
+            {errors.name && <p style={styles.errorText}>{errors.name}</p>}
           </div>
           <div style={styles.inputGroup}>
             <label style={styles.label}>Mobile No:</label>
@@ -132,6 +184,7 @@ const ContactUs = () => {
               onChange={handleChange}
               required
             />
+            {errors.mobile && <p style={styles.errorText}>{errors.mobile}</p>}
           </div>
           <div style={styles.inputGroup}>
             <label style={styles.label}>Email ID:</label>
@@ -143,6 +196,7 @@ const ContactUs = () => {
               onChange={handleChange}
               required
             />
+            {errors.email && <p style={styles.errorText}>{errors.email}</p>}
           </div>
           <div style={styles.inputGroup}>
             <label style={styles.label}>Subject:</label>

@@ -64,10 +64,6 @@ const Dashboard = () => {
     leftPanel: {
       flexBasis: "25%",
     },
-    centerPanel: {
-      flexBasis: "45%",
-      textAlign: "center",
-    },
     rightPanel: {
       flexBasis: "25%",
     },
@@ -166,24 +162,6 @@ const Dashboard = () => {
         )}
     </tbody>
 </table>
-        </div>
-
-        {/* CENTER PANEL */}
-        <div style={{ ...styles.panel, ...styles.centerPanel }}>
-          <h2 style={styles.heading}>Welcome {userData?.Name || 'User'}!</h2>
-          <p style={styles.detail}>
-            Manage your journal submissions, notifications, and account settings here.
-          </p>
-          <h4 style={{ ...styles.heading, fontSize: "20px", textAlign: "left" }}>Recent Activity</h4>
-          <div style={styles.activityList}>
-            {userData?.activities?.length > 0 ? (
-              userData.activities.map((activity, index) => (
-                <div key={index} style={styles.activityItem}>{activity}</div>
-              ))
-            ) : (
-              <div style={styles.activityItem}>No recent activity</div>
-            )}
-          </div>
         </div>
 
         {/* RIGHT PANEL */}

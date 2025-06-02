@@ -1,10 +1,10 @@
-import React from 'react';
+import React from 'react'
 
-const Contactbanner = () => {
-  const styles = {
+const Loginbanner = () => {
+     const styles = {
     container: {
       backgroundColor: '#F1EFEC',
-       padding: '30px 0px',
+       padding: '40px 0px',
       textAlign: 'center',
       position: 'relative',
       fontFamily: 'Livvic, sans-serif',
@@ -19,18 +19,17 @@ const Contactbanner = () => {
       color: '#8576FF',
     },
   };
-
   if (window.innerWidth <= 768) {
     styles.heading.fontSize = '2rem';
     styles.subheading.fontSize = '1rem';
   }
-
   return (
+    <>
     <div style={styles.container}>
-      <h1 style={styles.heading}>Contact Us</h1>
-      <p style={styles.subheading}>We'd love to hear from you!</p>
+      <h1 style={styles.heading}>Login </h1>
     </div>
-  );
-};
+    </>
+  )
+}
 
-export default Contactbanner;
+export default Loginbanner
